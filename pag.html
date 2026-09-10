@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emilio Cabaña | Data Science & Drone Cinematography</title>
+  
+  <!-- Fuente Google Fonts (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- VARIABLES & RESET --- */
+    :root {
+      --bg-dark: #0b0f19;
+      --bg-card: rgba(22, 30, 49, 0.7);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --primary: #38bdf8;       /* Celeste / Cian tecnológico */
+      --primary-glow: rgba(56, 189, 248, 0.25);
+      --accent: #6366f1;        /* Violeta tecnológico */
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --nav-bg: rgba(11, 15, 25, 0.85);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* --- CONTENEDORES Y ESTRUCTURA --- */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+      margin: 0.5rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* --- HEADER FIJO --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-card);
+      transition: var(--transition);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 2px;
+      background-color: var(--text-main);
+      transition: var(--transition);
+    }
+
+    /* --- HERO --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 70px;
+      background: radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
+    }
+
+    .hero-content {
+      max-width: 750px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      color: var(--primary);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 620px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.6rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #0b0f19;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: #7dd3fc;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--border-card);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* --- SOBRE MÍ --- */
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .about-card p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* --- SERVICIOS (CARDS) --- */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* --- CONTACTO --- */
+    .contact-wrapper {
+      background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 80%);
+      text-align: center;
+      padding: 4rem 1.5rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-card);
+    }
+
+    .contact-wrapper h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-wrapper p {
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      border-top: 1px solid var(--border-card);
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* --- ANIMACIONES DE SCROLL --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.3rem;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        flex-direction: column;
+        background: var(--bg-dark);
+        width: 100%;
+        text-align: center;
+        padding: 2.5rem 0;
+        gap: 1.8rem;
+        border-bottom: 1px solid var(--border-card);
+        transition: var(--transition);
+      }
+      .nav-links.open {
+        right: 0;
+      }
+      .about-card {
+        padding: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav-container">
+      <a href="#" class="logo">Emilio<span>.</span></a>
+      <button class="menu-toggle" id="menu-btn" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container hero-content reveal">
+      <span class="badge">Ciencia de Datos & Filmmaking</span>
+      <h1>Hola, soy <span>Emilio Cabaña</span>.</h1>
+      <p>
+        Transformo datos complejos en decisiones de valor y desarrollo soluciones digitales combinadas con producción audiovisual con drones de alto impacto.
+      </p>
+      <div class="btn-group">
+        <a href="#contacto" class="btn btn-primary">Hablemos</a>
+        <a href="#servicios" class="btn btn-secondary">Ver servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE MÍ -->
+  <section id="sobre-mi">
+    <div class="container">
+      <h2 class="section-title reveal">Sobre mí</h2>
+      <div class="about-card reveal">
+        <p>
+          Soy estudiante y desarrollador en el área de Ciencia de Datos y analítica, enfocado en resolver problemas reales mediante el diseño de herramientas eficientes, web scraping y modelos predictivos.
+        </p>
+        <p>
+          En paralelo, me apasiona la cinematografía aérea y la captura con drones (FPV y estabilizados), aplicando visión técnica y creatividad para coberturas comerciales y proyectos audiovisuales que buscan un estándar profesional.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS / HABILIDADES -->
+  <section id="servicios">
+    <div class="container">
+      <h2 class="section-title reveal">Servicios & Habilidades</h2>
+      <div class="cards-grid">
+        
+        <div class="card reveal">
+          <div class="card-icon">📊</div>
+          <h3>Análisis & Modelado</h3>
+          <p>Extracción, limpieza y análisis predictivo de datos para descubrir tendencias y optimizar la toma de decisiones comerciales.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-icon">⚡</div>
+          <h3>Desarrollo Web & Apps</h3>
+          <p>Creación de herramientas digitales interactivas, tableros de control y plataformas personalizadas orientadas a la automatización.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-icon">🚁</div>
+          <h3>Filmación con Drone</h3>
+          <p>Captura aérea profesional y dinámica con tecnología FPV para eventos, negocios, arquitectura y proyectos audiovisuales.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-icon">🎬</div>
+          <h3>Edición de Video</h3>
+          <p>Postproducción integral, gradación de color y tracking en DaVinci Resolve para lograr piezas de alto impacto visual.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="container">
+      <div class="contact-wrapper reveal">
+        <h2>¿Tenés un proyecto en mente?</h2>
+        <p>Escribime para coordinar una reunión o discutir cómo podemos llevar adelante tu idea o servicio.</p>
+        <a href="mailto:tu-correo@ejemplo.com" class="btn btn-primary">Contactar por Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Emilio Cabaña. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // Menú móvil desplegable
+    const menuBtn = document.getElementById('menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    menuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+    });
+
+    // Cerrar menú al hacer click en cualquier enlace
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+      });
+    });
+
+    // Animaciones de scroll sutiles con IntersectionObserver
+    const observerOptions = {
+      root: null,
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Se activa una sola vez
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
